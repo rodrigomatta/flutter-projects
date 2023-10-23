@@ -11,3 +11,4 @@ Repositório de exercícios do Curso de Flutter 2022.
 - Frase Unica
 - Teste Textos
 - Gasolina, Alcool e Bike
+- Navegacao

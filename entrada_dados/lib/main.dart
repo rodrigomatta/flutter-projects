@@ -1,9 +1,9 @@
-
-import 'package:entrada_daddos/Principal.dart';
+import 'package:entrada_dados/EntradaSlider.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: Principal(),
+    home: EntradaSlider(),
+    debugShowCheckedModeBanner: false,
   ));
 }
