@@ -13,3 +13,4 @@ Repositório de exercícios do Curso de Flutter 2022.
 - Gasolina, Alcool e Bike
 - Navegacao
 - Projeto Login
+- Gesture Detector App
