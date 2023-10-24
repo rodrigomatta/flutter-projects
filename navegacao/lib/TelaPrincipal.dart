@@ -20,7 +20,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         child: ElevatedButton(
           child: Text("Ir para a segunda tela"),
           onPressed: (){
-            Navigator.push(
+            Navigator.push( //adiciona uma tela a pilha.
               context,
               MaterialPageRoute(
                 builder: (context)=> TelaSecundaria(),

@@ -15,7 +15,18 @@ class _TelaSecundariaState extends State<TelaSecundaria> {
         title: Text("Tela Secundaria"),
       ),
       body: Container(
-        child: Text("TELA SECUNDÁRIA"),
+        padding: EdgeInsets.all(30),
+        child: ElevatedButton(
+          child: Text("Ir para a tela Principal"),
+          onPressed: (){
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context)=> TelaPrincipal()
+            //   )
+            // );
+            Navigator.pop(context); //só exclui a ultima tela da pilha.
+          }, 
+        ),
       ),
     );
   }
