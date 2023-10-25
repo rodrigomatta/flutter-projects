@@ -14,3 +14,5 @@ Repositório de exercícios do Curso de Flutter 2022.
 - Navegacao
 - Projeto Login
 - Gesture Detector App
+- Flutter API
+- Listas

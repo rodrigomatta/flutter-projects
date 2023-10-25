@@ -1,0 +1,43 @@
+{
+    "coord": {
+        "lon": -51.1628,
+        "lat": -23.3103
+    },
+    "weather": [
+        {
+            "id": 701,
+            "main": "Mist",
+            "description": "névoa",
+            "icon": "50d"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 21.81,
+        "feels_like": 22.34,
+        "temp_min": 21.81,
+        "temp_max": 21.81,
+        "pressure": 1013,
+        "humidity": 88
+    },
+    "visibility": 5000,
+    "wind": {
+        "speed": 1.54,
+        "deg": 160
+    },
+    "clouds": {
+        "all": 75
+    },
+    "dt": 1698238706,
+    "sys": {
+        "type": 1,
+        "id": 8399,
+        "country": "BR",
+        "sunrise": 1698223429,
+        "sunset": 1698269605
+    },
+    "timezone": -10800,
+    "id": 3458449,
+    "name": "Londrina",
+    "cod": 200
+}
