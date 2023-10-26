@@ -17,3 +17,4 @@ Repositório de exercícios do Curso de Flutter 2022.
 - Flutter API
 - Listas
 - Flutter Future / Cotação Bitcoin em pares de moedas estrangeiros
+- YouTube
