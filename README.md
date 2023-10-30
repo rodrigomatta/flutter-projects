@@ -21,3 +21,4 @@ Repositório de exercícios do Curso de Flutter 2022.
 - Floating Button
 - Shared Preferences
 - Banco de Dados SQLite (Consulta, editação, delete, mostrar)
+- Lista de Tarefas
