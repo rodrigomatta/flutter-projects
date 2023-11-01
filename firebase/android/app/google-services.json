@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "934044043227",
+    "project_id": "aulafluterando",
+    "storage_bucket": "aulafluterando.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934044123457:android:76537dab51234e27a76eca",
+        "android_client_info": {
+          "package_name": "com.example.firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-R9cEabcdefgHIVPv5kmR9JwcuYtxXxtQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
