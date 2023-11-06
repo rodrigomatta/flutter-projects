@@ -23,3 +23,6 @@ Repositório de exercícios do Curso de Flutter 2022.
 - Banco de Dados SQLite (Consulta, editação, delete, mostrar)
 - Lista de Tarefas com Drawer Header e função para excluir itens
 - Firebase
+- Abas
+- Musicas
+- Videos

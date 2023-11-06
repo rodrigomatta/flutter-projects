@@ -2,6 +2,8 @@ import 'package:abas/Pagina1.dart';
 import 'package:abas/Pagina2.dart';
 import 'package:abas/Pagina3.dart';
 import 'package:flutter/material.dart';
+//01 h 45 min
+//authFirebase
 
 class Principal extends StatefulWidget {
   const Principal({super.key});
@@ -49,11 +51,16 @@ class _PrincipalState extends State<Principal> with SingleTickerProviderStateMix
       body: TabBarView(
         controller: tabController,
         children: [
-          Pagina1();
+          Pagina1(),
           Pagina2(),
           Pagina3(),
         ],
       )
     );
+  }
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
   }
 }
