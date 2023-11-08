@@ -19,18 +19,41 @@ class _PrincipalState extends State<Principal> {
 
   Set<Marker> listaMarcadores = {};
 
-  Future<Uint8List> getBytesFromAsset(String path, int width) async {
-    ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
-    ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+  onMapCreated(GoogleMapController googleMapController) {
+    controller.complete(googleMapController);
   }
 
-  onMapCreated(GoogleMapController googleMapController) { 
-    controller.complete(googleMapController); 
+  localizarDispositivo() async {
+    bool servicosAtivos;
+    LocationPermission permissao;
+
+    servicosAtivos = await Geolocator.isLocationServiceEnabled();
+    if (!servicosAtivos) {
+      return Future.error("Serviços de localização desabilitadas");
+    }
+    permissao = await Geolocator.checkPermission();
+    if (permissao == LocationPermission.denied) {
+      permissao = await Geolocator.requestPermission();
+      if (permissao == LocationPermission.denied) {
+        return Future.error("Permissão para erro, acesso negado.");
+      }
+    }
+    if (permissao == LocationPermission.deniedForever) {
+      return Future.error("Permissão para acesso a localização negada");
+    }
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high
+    );
+    criarMarcadores(position);
+    setState(() {
+      localCamera =
+          CameraPosition(target: LatLng(position.latitude, position.longitude),
+              zoom: 17);
+    });
+    mudarCamera(localCamera);
   }
 
-  mudarCamera(CameraPosition localCamera) async { 
+  mudarCamera(CameraPosition localCamera) async {
     GoogleMapController googleMapController = await controller.future;
     googleMapController.animateCamera(
       // CameraUpdate.newCameraPosition( 
@@ -41,90 +64,66 @@ class _PrincipalState extends State<Principal> {
       //     bearing: 30 
       //   )
       // )
-      CameraUpdate.newCameraPosition(localCamera)
+        CameraUpdate.newCameraPosition(localCamera)
     );
+  }
+
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(
+        data.buffer.asUint8List(), targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer
+        .asUint8List();
   }
 
   criarMarcadores(Position position) async {
     Set<Marker> marcadoresLocal = {};
-    Marker marcador1 = Marker(
-      markerId: const MarkerId("Marcador 1"),
-      position: const LatLng(-23.362119, -51.173073),
-      infoWindow: const InfoWindow(
-        title: "Marcando o primeiro local"
-      ),
-    );
-    Marker marcador2 = Marker(
-      markerId: const MarkerId("Marcador 2"),
-      position: const LatLng(-23.361733, -51.180243),
-      infoWindow: const InfoWindow(
-        title: "Marcando o segundo local"
-      ),
-      icon: BitmapDescriptor.defaultMarkerWithHue(
-        BitmapDescriptor.hueYellow
-      ),
-      onTap: () {
-        print("marcador clicado");
-      }
-    );
-    final Uint8List iconePersonalizado = await getBytesFromAsset('images/nicolascage.png', 200);
+    // Marker marcador1 = Marker(
+    //   markerId: const MarkerId("Marcador 1"),
+    //   position: const LatLng(-23.362119, -51.173073),
+    //   infoWindow: const InfoWindow(
+    //     title: "Marcando o primeiro local"
+    //   ),
+    // );
+    // Marker marcador2 = Marker(
+    //   markerId: const MarkerId("Marcador 2"),
+    //   position: const LatLng(-23.361733, -51.180243),
+    //   infoWindow: const InfoWindow(
+    //     title: "Marcando o segundo local"
+    //   ),
+    //   icon: BitmapDescriptor.defaultMarkerWithHue(
+    //     BitmapDescriptor.hueYellow
+    //   ),
+    //   onTap: () {
+    //     print("marcador clicado");
+    //   }
+    // );
+    final Uint8List iconePersonalizado = await getBytesFromAsset(
+        'images/nicolascage.png', 200);
     Marker marcador3 = Marker(
-      markerId: const MarkerId("Marcador 3"),
-      position: LatLng(position.latitude, position.longitude),
-      infoWindow: const InfoWindow(
-        title: "Marcando o Nicolas Cage"
-      ),
-      icon: BitmapDescriptor.fromBytes(iconePersonalizado),
-      onTap: () {
-        print("marcador clicado");
-      }
+        markerId: const MarkerId("Marcador 3"),
+        position: LatLng(position.latitude, position.longitude),
+        infoWindow: const InfoWindow(
+            title: "Marcando o Nicolas Cage"
+        ),
+        icon: BitmapDescriptor.fromBytes(iconePersonalizado),
+        onTap: () {
+          print("marcador clicado");
+        }
     );
-    marcadoresLocal.add(marcador1);
-    marcadoresLocal.add(marcador2);
+    // marcadoresLocal.add(marcador1);
+    // marcadoresLocal.add(marcador2);
     marcadoresLocal.add(marcador3);
     setState(() {
       listaMarcadores = marcadoresLocal;
     });
   }
 
-  localizarDispositivo() async {
-    bool servicosAtivos;
-    LocationPermission permission;
-
-    servicosAtivos = await Geolocator.isLocationServiceEnabled();
-    if (!servicosAtivos) {
-      return Future.error("Serviços de localização desabilitados");
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error("Permissão para acesso a localização negada");
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error("Permissão para acesso a localização negada até o planeta sumir");
-    }
-
-    Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-
-    criarMarcadores(position);
-    setState(() {
-      localCamera = CameraPosition(
-        target: LatLng(position.latitude, position.longitude),
-        zoom: 17,
-      );
-    });
-  }
-
   movimentarCamera(CameraPosition localCamera) async {
     GoogleMapController googleMapController = await controller.future;
     googleMapController.animateCamera(
-      CameraUpdate.newCameraPosition(localCamera)
+        CameraUpdate.newCameraPosition(localCamera)
     );
   }
 
@@ -134,7 +133,8 @@ class _PrincipalState extends State<Principal> {
       distanceFilter: 5,
     );
 
-    Geolocator.getPositionStream(locationSettings: configuracaoLocalizacao).listen((Position position) {
+    Geolocator.getPositionStream(locationSettings: configuracaoLocalizacao)
+        .listen((Position position) {
       setState(() {
         localCamera = CameraPosition(
           target: LatLng(position.latitude, position.longitude),
@@ -145,39 +145,39 @@ class _PrincipalState extends State<Principal> {
       });
     });
   }
-  
+
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
     //criarMarcadores();
     localizarDispositivo();
-    ouvirLocalizacao();
   }
 
-  @override 
-  Widget build(BuildContext context) { 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( 
-        title: const Text("Mapas") 
+      appBar: AppBar(
+        title: const Text("Mapas")
       ),
-      body: Container( 
+      body: Container(
         child: GoogleMap(
-          mapType: MapType.hybrid, 
+          mapType: MapType.hybrid,
           initialCameraPosition: localCamera,
-          // initialCameraPosition: const CameraPosition( 
+          // initialCameraPosition: const CameraPosition(
           //   target: LatLng(-23.362119, -51.173073),
-          //   zoom: 16 
+          //   zoom: 16
           // ),
           onMapCreated: onMapCreated,
           markers: listaMarcadores, //lista de marcadores
         )
       ),
       // floatingActionButton: FloatingActionButton(
-      //   child: const Icon(Icons.pinch_rounded), 
+      //   child: const Icon(Icons.pinch_rounded),
       //   onPressed: mudarCamera,
-      //   backgroundColor: Colors.red 
+      //   backgroundColor: Colors.red
       // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.startFloat, 
+      // floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 }
