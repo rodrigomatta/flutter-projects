@@ -29,3 +29,4 @@ Repositório de exercícios do Curso de Flutter 2022.
 - Mapas 1: Posição de Câmera
 - Mapas 2: Desenhos com poligonos
 - Mapas 3: Posição marcador streaming
+- multiplataforma
