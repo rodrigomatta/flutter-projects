@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mapas/Principal.dart'; // Importa o pacotes
+import 'package:mapas/Principal.dart'; // Importa o pacote Material Design do Flutter.
+//import 'package:mapas/Desenhos.dart';
 
 void main() { // Função principal que inicia a aplicação Flutter.
   runApp(MaterialApp( // Inicia o aplicativo com um MaterialApp, que é um widget conveniente que inclui um número de widgets comuns necessários em aplicações.
